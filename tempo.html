@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Tempo Produtivo - TOP Gestão</title>
+    <style>
+        :root { --primary: #0056b3; --secondary: #003366; --bg: #f4f7f6; --border: #ddd; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background: var(--bg); padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        h2 { color: var(--secondary); }
+        .btn-voltar { background: var(--secondary); color: white; padding: 10px 15px; text-decoration: none; border-radius: 4px; font-weight: bold; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid var(--border); }
+        th { background: #f8f9fa; color: var(--secondary); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>Tempo Produtivo</h2>
+            <a href="1-index.html" class="btn-voltar">Voltar ao Menu</a>
+        </div>
+        <table>
+            <thead><tr><th>Matrícula</th><th>Conectado</th><th>Tempo Prod.</th><th>% Produtivo</th></tr></thead>
+            <tbody id="tabela"><tr><td colspan="4">Carregando...</td></tr></tbody>
+        </table>
+    </div>
+
+    <script>
+        const API_URL = 'https://equipe100-api.onrender.com/api';
+        async function carregarDados() {
+            const tbody = document.getElementById('tabela');
+            try {
+                const res = await fetch(`${API_URL}/tempo-produtivo`);
+                if(!res.ok) throw new Error();
+                const dados = await res.json();
+                tbody.innerHTML = '';
+                dados.forEach(d => tbody.innerHTML += `<tr><td>${d.matricula}</td><td>${d.conectado}</td><td>${d.tempoProd}</td><td>${d.percentualProdutivo}</td></tr>`);
+            } catch (e) { 
+                tbody.innerHTML = '<tr><td colspan="4">A rota de Tempo Produtivo ainda não foi criada no seu Backend (Render).</td></tr>'; 
+            }
+        }
+        carregarDados();
+    </script>
+</body>
+</html>
