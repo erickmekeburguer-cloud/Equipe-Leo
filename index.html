@@ -2,128 +2,25 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TOP Gestão - Sistema</title>
+    <title>TOP Gestão</title>
     <style>
-        /* ================= CSS EMBUTIDO ================= */
-        :root { 
-            --primary: #0056b3; 
-            --secondary: #003366; 
-            --bg: #f4f7f6; 
-            --border: #ddd; 
-            --danger: #dc3545;
-            --success: #28a745;
-        }
-        
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
-        body { background: var(--bg); display: flex; height: 100vh; overflow: hidden; }
-
-        /* Menu Lateral */
-        .sidebar { width: 250px; background: var(--secondary); color: white; display: flex; flex-direction: column; }
-        .sidebar h2 { padding: 20px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); }
-        .sidebar a { padding: 15px 20px; color: #ccc; text-decoration: none; cursor: pointer; transition: 0.2s; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .sidebar a:hover, .sidebar a.active { background: var(--primary); color: white; }
-
-        /* Conteúdo Principal */
-        .main { flex: 1; display: flex; flex-direction: column; overflow-y: auto; }
-        header { background: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); }
-        
-        /* Controle das Páginas (Abas) */
-        .page { display: none; padding: 30px; }
-        .page.active { display: block; }
-
-        /* Tabelas */
-        table { width: 100%; border-collapse: collapse; background: white; margin-top: 20px; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid var(--border); }
-        th { background: #f8f9fa; color: var(--secondary); }
-        tr:hover { background: #f1f1f1; }
-
-        /* Botões */
-        .btn { padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; color: white; font-weight: bold; background: var(--primary); }
-        .btn:hover { opacity: 0.9; }
+        body { font-family: 'Segoe UI', sans-serif; background: #f4f7f6; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .container { background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); text-align: center; }
+        h1 { color: #003366; margin-bottom: 30px; }
+        .menu-btn { display: block; width: 250px; padding: 15px; margin: 10px auto; background: #0056b3; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; transition: 0.2s; }
+        .menu-btn:hover { background: #003366; }
     </style>
 </head>
 <body>
-
-    <!-- MENU LATERAL -->
-    <aside class="sidebar">
-        <h2>TOP Gestão</h2>
-        <a onclick="abrirAba('dashboard', this)" class="active">📊 Dashboard</a>
-        <a onclick="abrirAba('youpoints', this)">🎯 YouPoints</a>
-        <a onclick="abrirAba('abs', this)">📉 Somente ABS</a>
-        <a onclick="abrirAba('tempo', this)">⏱️ Tempo Produtivo</a>
-        <a onclick="abrirAba('banco', this)">🏦 Controle BH</a>
-        <a onclick="abrirAba('indicadores', this)">📈 Indicadores</a>
-    </aside>
-
-    <!-- CONTEÚDO PRINCIPAL -->
-    <main class="main">
-        <header>
-            <h3 id="titulo-pagina">Dashboard</h3>
-            <button class="btn" onclick="recarregarDados()">Atualizar Dados</button>
-        </header>
-
-        <!-- ABA 1: DASHBOARD -->
-        <div id="page-dashboard" class="page active">
-            <h2>Bem-vindo ao TOP Gestão</h2>
-            <p style="margin-top: 10px; color: #666;">Selecione uma aba no menu lateral para visualizar os dados.</p>
-        </div>
-
-        <!-- ABA 2: YOUPOINTS -->
-        <div id="page-youpoints" class="page">
-            <table>
-                <thead>
-                    <tr><th>Agente</th><th>ABS</th><th>Tempo Logado</th><th>Tempo Produtivo</th><th>Tabul. N/A</th><th>Transf. Pesquisa</th></tr>
-                </thead>
-                <tbody id="tabela-youp oints">
-                    <tr><td colspan="6">Carregando...</td></tr>
-                </tbody>
-            </table>
-        </div>
-
-        <!-- ABA 3: SOMENTE ABS -->
-        <div id="page-abs" class="page">
-            <table>
-                <thead><tr><th>Mês</th><th>Valor ABS</th></tr></thead>
-                <tbody id="tabela-abs">
-                    <tr><td colspan="2">Carregando...</td></tr>
-                </tbody>
-            </table>
-        </div>
-
-        <!-- ABA 4: TEMPO PRODUTIVO -->
-        <div id="page-tempo" class="page">
-            <table>
-                <thead><tr><th>Matrícula</th><th>Conectado</th><th>Tempo Prod.</th><th>% Produtivo</th></tr></thead>
-                <tbody id="tabela-tempo">
-                    <tr><td colspan="4">Carregando...</td></tr>
-                </tbody>
-            </table>
-        </div>
-
-        <!-- ABA 5: CONTROLE BH -->
-        <div id="page-banco" class="page">
-            <table>
-                <thead><tr><th>Colaborador</th><th>Tipo</th><th>Saldo</th><th>Prazo</th></tr></thead>
-                <tbody id="tabela-banco">
-                    <tr><td colspan="4">Carregando...</td></tr>
-                </tbody>
-            </table>
-        </div>
-
-        <!-- ABA 6: INDICADORES -->
-        <div id="page-indicadores" class="page">
-            <table>
-                <thead><tr><th>Colaborador</th><th>Atendidas</th><th>Quartil</th><th>% CSAT</th></tr></thead>
-                <tbody id="tabela-indicadores">
-                    <tr><td colspan="4">Carregando...</td></tr>
-                </tbody>
-            </table>
-        </div>
-
-    </main>
-
-    <!-- Link para o arquivo JavaScript -->
-    <script src="app.js"></script>
+    <div class="container">
+        <h1>TOP Gestão</h1>
+        <p style="margin-bottom: 20px; color: #666;">Selecione o módulo que deseja acessar:</p>
+        
+        <a href="2-youp oints.html" class="menu-btn">🎯 Módulo YouPoints</a>
+        <a href="3-abs.html" class="menu-btn">📉 Módulo ABS</a>
+        <a href="4-tempo.html" class="menu-btn">⏱️ Tempo Produtivo</a>
+        <a href="5-banco.html" class="menu-btn">🏦 Banco de Horas</a>
+        <a href="6-indicadores.html" class="menu-btn">📈 Indicadores</a>
+    </div>
 </body>
 </html>
