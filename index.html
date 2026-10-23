@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TOP Gestão - Sistema</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- TELA DE LOGIN -->
+    <div id="tela-login">
+        <div class="login-box">
+            <h2>TOP Gestão</h2>
+            <p style="font-size: 12px; text-align: center; margin-bottom: 15px; color: #666;">(Ainda sem login real na API, clique em Entrar)</p>
+            <input type="email" id="login-email" placeholder="E-mail">
+            <input type="password" id="login-senha" placeholder="Senha">
+            <button onclick="fazerLogin()" class="btn btn-primary">Entrar</button>
+        </div>
+    </div>
+
+    <!-- SISTEMA -->
+    <div id="sistema" style="display: none; width: 100%; height: 100%; display: flex;">
+        
+        <!-- Menu Lateral -->
+        <aside class="sidebar">
+            <h2>TOP Gestão</h2>
+            <a onclick="mudarAba('dashboard', this)" class="active">📊 Dashboard</a>
+            <a onclick="mudarAba('youpoints', this)">🎯 YouPoints</a>
+            <a onclick="mudarAba('abs', this)">📉 Somente ABS</a>
+            <a onclick="mudarAba('tempo', this)">⏱️ Tempo Produtivo</a>
+        </aside>
+
+        <!-- Conteúdo Principal -->
+        <main class="main-content">
+            <header>
+                <h3>Gestão Operacional</h3>
+                <div class="user-info">
+                    <span>Olá, Supervisor</span>
+                    <button onclick="sair()" class="btn-sair">Sair</button>
+                </div>
+            </header>
+
+            <!-- ABA: DASHBOARD -->
+            <div id="aba-dashboard" class="content-area active">
+                <div class="dashboard-grid">
+                    <div class="card">
+                        <h3>Total de Colaboradores</h3>
+                        <div class="value" id="dash-colab">0</div>
+                    </div>
+                    <div class="card" style="border-left-color: var(--success);">
+                        <h3>Registros YouPoints</h3>
+                        <div class="value" id="dash-youpoints">0</div>
+                    </div>
+                </div>
+                <h3 style="margin-bottom: 15px;">Últimos alertas de Banco de Horas</h3>
+                <table>
+                    <thead><tr><th>Matrícula</th><th>Colaborador</th><th>Tipo</th></tr></thead>
+                    <tbody id="tabela-alertas">
+                        <tr><td colspan="3">Carregando dados do banco...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- ABA: YOUPOINTS -->
+            <div id="aba-youp oints" class="content-area">
+                <div class="page-header">
+                    <h2>Controle YouPoints</h2>
+                    <button class="btn btn-primary" onclick="carregarYouPoints()">Atualizar Dados</button>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Colaborador</th>
+                            <th>ABS</th>
+                            <th>Tempo Logado</th>
+                            <th>Tempo Produtivo</th>
+                            <th>Transf. Pesquisa</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabela-youp oints">
+                        <tr><td colspan="5">Carregando...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Outras abas estão vazias para você preencher depois -->
+            <div id="aba-abs" class="content-area"><h2>Controle de ABS (Em breve)</h2></div>
+            <div id="aba-tempo" class="content-area"><h2>Tempo Produtivo (Em breve)</h2></div>
+
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
